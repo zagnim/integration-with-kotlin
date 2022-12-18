@@ -1,30 +1,27 @@
 package com.nima.integrations.moon
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.client.RestTemplate
+import org.springframework.web.bind.annotation.*
 import java.sql.Timestamp
-import java.time.LocalDateTime
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
+import java.util.stream.Collector
+import java.util.stream.Collectors
 
-@Controller
+@RestController
 @RequestMapping("si/moon")
-class MoonController {
-    val restTemplate = RestTemplate()
+class MoonController(val apiRepository: MoonApiRepository) {
 
     @GetMapping
     fun getMoonDataForGivenDate(
-        @RequestParam(name = "date") date: String): ResponseEntity<Any> {
-        return restTemplate.getForEntity("https://api.farmsense.net/v1/moonphases/?d=" +
-                "${Timestamp
-                    .valueOf(
-                        if(date.isEmpty()||date.isBlank()) LocalDateTime.now()
-                        else LocalDateTime.parse(date, DateTimeFormatter.ISO_LOCAL_DATE)//YYYY-MM-DD
-                ).nanos}",
-                Any::class.java
-        )
+        @RequestParam(name = "date", required = false, defaultValue = "2018-08-25") date: String
+    ):ResponseEntity<String> {
+        val dateFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd");
+        val d: Long = dateFormat.parse(date).time
+        return ResponseEntity(apiRepository.getMoonPhaseForDate("$d").body(), HttpStatus.OK)
     }
 }

@@ -6,4 +6,5 @@ import java.net.http.HttpResponse
 @Service
 interface HttpClientExecutor {
     fun makeRequest(path: String): HttpResponse<String>
+    fun makeSecureRequest(path: String, session: String): HttpResponse<String>
 }

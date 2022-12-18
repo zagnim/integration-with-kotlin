@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.net.http.HttpResponse
 
 @RestController
 @RequestMapping("si/countries")
-class Controller(val countryCountryApiRepository: CountryApiRepository) {
+class CountryController(val countryCountryApiRepository: CountryApiRepository) {
 
     @GetMapping
     fun getAll(): ResponseEntity<String> {
@@ -28,5 +27,4 @@ class Controller(val countryCountryApiRepository: CountryApiRepository) {
             HttpStatus.ACCEPTED
         )
     }
-
 }

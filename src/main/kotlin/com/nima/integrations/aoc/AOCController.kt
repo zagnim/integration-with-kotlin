@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("si/aoc-quiz")
+@RequestMapping("si/aoc")
 class AOCController(val apiRepository: AOCApiRepository) {
 
     //:2022/day/6/input:

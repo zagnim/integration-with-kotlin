@@ -1,4 +1,4 @@
-package com.nima.integrations.moon
+package com.nima.integrations.api.dto
 
 /*
 {
@@ -16,7 +16,7 @@ package com.nima.integrations.moon
     "SunAngularDiameter":0.5253407770828018
 }
  */
-data class Moon(
+data class MoonDto(
     val Error:Int,
     val ErrorMsg:String,
     val TargetDate:String,

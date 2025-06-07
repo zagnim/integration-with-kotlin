@@ -1,4 +1,4 @@
-package com.nima.integrations.country
+package com.nima.integrations.api
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -7,14 +7,17 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+import com.nima.integrations.service.CountryService
+
+
 @RestController
 @RequestMapping("si/countries")
-class CountryController(val countryCountryApiRepository: CountryApiRepository) {
+class CountryController(val countryService: CountryService) {
 
     @GetMapping
     fun getAll(): ResponseEntity<String> {
         return ResponseEntity(
-            countryCountryApiRepository.getAllCountries().body(),
+            countryService.getAllCountries(),
             HttpStatus.ACCEPTED
         )
     }
@@ -23,7 +26,7 @@ class CountryController(val countryCountryApiRepository: CountryApiRepository) {
     fun getCountryByCapital(@PathVariable(name = "capital") capital:String)
     :ResponseEntity<String>{
         return ResponseEntity(
-            countryCountryApiRepository.getCountryByCapital(capital).body(),
+            countryService.getCountryByCapital(capital),
             HttpStatus.ACCEPTED
         )
     }

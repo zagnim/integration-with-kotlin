@@ -1,4 +1,4 @@
-package com.nima.integrations.httpExecutor
+package com.nima.integrations.client
 
 import org.springframework.stereotype.Service
 import java.net.URI
@@ -7,20 +7,14 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 @Service
-class AOCHttpClientBehavior : HttpClientExecutor {
+class CountryClient {
     private val client = HttpClient.newBuilder().build()
-    private val baseURI:String = "https://adventofcode.com/"
+    private val baseURI = "https://restcountries.com/v3.1/"
 
-    override fun makeSecureRequest(path: String, session: String): HttpResponse<String> {
+    fun getCountry(path:String): HttpResponse<String> {
         val request = HttpRequest.newBuilder()
             .uri(URI.create("${baseURI}${path}"))
-            .header("cookie", session)
             .build()
         return client.send(request,HttpResponse.BodyHandlers.ofString())
     }
-
-    override fun makeRequest(path: String): HttpResponse<String> {
-        TODO("Not yet implemented")
-    }
-
 }
